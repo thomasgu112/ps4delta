@@ -22,7 +22,7 @@ workspace "PS4Delta"
     location "../build"
     os.mkdir"../build/symbols"
     characterset "Unicode"
-	cppdialect "C++17"
+    cppdialect "C++17"
 
     -- multi threaded compilation
     flags "MultiProcessorCompile"
@@ -42,7 +42,7 @@ workspace "PS4Delta"
     }
     
     filter "platforms:x64"
-         architecture "x86_64"
+        architecture "x86_64"
 
     filter "configurations:Debug"
         defines { "DELTA_DBG" }
@@ -51,7 +51,7 @@ workspace "PS4Delta"
         optimize "Speed"
 
     filter {"system:windows", "kind:not StaticLib"}
-         linkoptions { "/PDB:\"$(SolutionDir)\\symbols\\$(ProjectName)_%{cfg.buildcfg}.pdb\"" }
+        linkoptions { "/PDB:\"$(SolutionDir)\\symbols\\$(ProjectName)_%{cfg.buildcfg}.pdb\"" }
 
     filter { "system:windows", "kind:not StaticLib" }
         linkoptions "/manifestdependency:\"type='Win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\""
@@ -71,6 +71,9 @@ workspace "PS4Delta"
             "_SCL_SECURE_NO_WARNINGS",
             "_SCL_SECURE_NO_DEPRECATE"
         }
+
+    filter "action:gmake*"
+        toolset "clang"
 
     group "core"
     include "delta/host"
