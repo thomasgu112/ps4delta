@@ -49,8 +49,8 @@
 
 #ifdef _WIN32
 #define EXPORT extern "C" __declspec(dllexport)
-#elif
-#define EXPORT
+#else
+#define EXPORT __attribute__ ((visibility("default")))
 #endif
 
 #define POW2_MASK (align - static_cast<T>(1))

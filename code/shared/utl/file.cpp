@@ -7,6 +7,7 @@
  * in the root of the source tree.
  */
 
+#include <base.h>
 #include "file.h"
 #include <algorithm>
 #include <cstdio>
@@ -63,7 +64,7 @@ public:
     uint64_t x = std::fread(buf, size, 1, fptr);
 #if DELTA_DBG
     if (x != 1) {
-      __debugbreak();
+      dbg_break();
     }
 #endif
 
