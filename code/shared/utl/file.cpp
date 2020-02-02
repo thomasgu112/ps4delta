@@ -7,7 +7,7 @@
  * in the root of the source tree.
  */
 
-#include "File.h"
+#include "file.h"
 #include <algorithm>
 #include <cstdio>
 
