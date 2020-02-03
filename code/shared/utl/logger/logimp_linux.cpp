@@ -9,8 +9,8 @@
 // TODO: move this in dcore?
 
 #ifdef __linux__
+
 #include "logger.h"
-//#include <cstdlib>
 
 namespace utl {
 class fileOut final : public logBase {
@@ -55,10 +55,10 @@ static void PrintMessage(const logEntry &entry, const std::string &color) {
   auto str = formatLogEntry(entry);
   if (!color.empty())
     str = "\x1B[" + color + str + "\033[0m";
-  puts(str.c_str());
+  puts(str.c_str()); // stdout
 }
 
-class conOut_Win final : public logBase {
+class conOut_Linux final : public logBase {
 
 public:
   const char *getName() override { return "conOut"; }
@@ -93,34 +93,25 @@ public:
   }
 };
 
-class dbgOut_Win32 final : public logBase {
+class dbgOut_Linux final : public logBase {
 public:
   const char *getName() override { return "dbgOut"; }
 
   void write(const logEntry &entry) override {
     auto str = formatLogEntry(entry).append(1, '\n');
-    OutputDebugStringA(str.c_str());
+    fputs(str.c_str(), stderr);
   }
 };
 
 void createLogger(bool createConsole) {
   if (createConsole) {
-    ::AllocConsole();
-    ::AttachConsole(GetCurrentProcessId());
-    ::SetConsoleTitleW(FXNAME_WIDE L" - console");
-
-    FILE *file = nullptr;
-    freopen_s(&file, "CON", "w", stdout);
-    freopen_s(&file, "CONIN$", "r", stdin);
-
-    addLogSink(std::make_unique<conOut_Win>());
+    addLogSink(std::make_unique<conOut_Linux>());
   }
 
   // attach the sinks to the log system
   addLogSink(std::make_unique<fileOut>(FXNAME_WIDE L".log"));
 
-  if (IsDebuggerPresent())
-    addLogSink(std::make_unique<dbgOut_Win32>());
+  addLogSink(std::make_unique<dbgOut_Linux>());
 
   // attempt to properly close log file in case of a crash
   std::atexit([]() {
