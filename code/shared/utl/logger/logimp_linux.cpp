@@ -54,7 +54,7 @@ public:
 static void PrintMessage(const logEntry &entry, const std::string &color) {
   auto str = formatLogEntry(entry);
   if (!color.empty())
-    str = "\x1B[" + color + str + "\033[0m";
+    str = std::string("\x1B[") + color + str + std::string("\033[0m");
   puts(str.c_str()); // stdout
 }
 
