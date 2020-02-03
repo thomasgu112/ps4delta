@@ -51,8 +51,10 @@ public:
   }
 };
 
-static void PrintMessage(const logEntry &entry) {
+static void PrintMessage(const logEntry &entry, const std::string &color) {
   auto str = formatLogEntry(entry);
+  if (!color.empty())
+    str = "\x1B[" + color + str + "\033[0m";
   puts(str.c_str());
 }
 
@@ -62,41 +64,32 @@ public:
   const char *getName() override { return "conOut"; }
 
   void write(const logEntry &entry) override {
-    HANDLE console_handle = GetStdHandle(STD_ERROR_HANDLE);
-    if (console_handle == INVALID_HANDLE_VALUE) {
-      return;
-    }
-
-    CONSOLE_SCREEN_BUFFER_INFO original_info = {};
-    GetConsoleScreenBufferInfo(console_handle, &original_info);
-
-    WORD color = 0;
+    std::string color = "";
     switch (entry.log_level) {
     case logLevel::Trace: // Grey
-      color = FOREGROUND_INTENSITY;
+      color = "90m"; // FOREGROUND_INTENSITY;
       break;
     case logLevel::Debug: // Cyan
-      color = FOREGROUND_GREEN | FOREGROUND_BLUE;
+      color = "36m"; // FOREGROUND_GREEN | FOREGROUND_BLUE;
       break;
     case logLevel::Info: // Bright gray
-      color = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+      // "37m" - is white, there is "38;5;247m" - check if you like it
+	  color = "37m"; // FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
       break;
     case logLevel::Warning: // Bright yellow
-      color = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+      color = "93m"; // FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
       break;
     case logLevel::Error: // Bright red
-      color = FOREGROUND_RED | FOREGROUND_INTENSITY;
+      color = "31m"; //FOREGROUND_RED | FOREGROUND_INTENSITY;
       break;
     case logLevel::Critical: // Bright magenta
-      color = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+      color = "35m"; //FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
       break;
       // case LogLevel::Count:
       //	UNREACHABLE();
     }
 
-    SetConsoleTextAttribute(console_handle, color);
-    PrintMessage(entry);
-    SetConsoleTextAttribute(console_handle, original_info.wAttributes);
+    PrintMessage(entry, color);
   }
 };
 
