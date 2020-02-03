@@ -8,10 +8,9 @@
  */
 // TODO: move this in dcore?
 
-#ifdef _WIN32
-#include <Windows.h>
-
+#ifdef __linux__
 #include "logger.h"
+//#include <cstdlib>
 
 namespace utl {
 class fileOut final : public logBase {
@@ -20,7 +19,12 @@ class fileOut final : public logBase {
 
 public:
   explicit fileOut(const std::wstring &filename) {
-    _wfopen_s(&handle, filename.c_str(), L"w");
+    // sad, but filename.size() == filename.length()
+	size_t len = filename.length() * sizeof(wchar_t) + 1; // + 1 for '\0'
+	char dst[len];
+	wcstombs(dst, filename.c_str(), len);
+    
+    handle = fopen(dst, "w");
   }
 
   void close() {
