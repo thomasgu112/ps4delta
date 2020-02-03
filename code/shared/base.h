@@ -49,8 +49,13 @@
 
 #ifdef _WIN32
 #define EXPORT extern "C" __declspec(dllexport)
+#define PATH_SEP '\\'
 #else
 #define EXPORT __attribute__ ((visibility("default")))
+#define PATH_SEP '/'
+
+#include <limits.h>
+#define MAX_PATH PATH_MAX + 1
 #endif
 
 #define POW2_MASK (align - static_cast<T>(1))
