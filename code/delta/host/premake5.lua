@@ -5,7 +5,11 @@ project "host"
     flags "NoManifest"
     targetname "%{wks.name}"
 
-    linkoptions "/ENTRY:mainCRTStartup"
+    filter "system:windows"
+        linkoptions "/ENTRY:mainCRTStartup"
+    filter "system:not windows"
+        linkoptions "-ldl"
+    filter {}
 
     -- win/project resource description
     defines { "rsc_company=\"Dev-Force/Alpin-Dev\"",
@@ -35,3 +39,6 @@ project "host"
         "**.h",
         "**.cpp"
     }
+
+    filter "system:not windows"
+        removefiles "**.rc"
