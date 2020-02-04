@@ -56,6 +56,7 @@
 
 #include <limits.h>
 #define MAX_PATH PATH_MAX + 1
+#define _STD ::std::
 #endif
 
 #define POW2_MASK (align - static_cast<T>(1))
