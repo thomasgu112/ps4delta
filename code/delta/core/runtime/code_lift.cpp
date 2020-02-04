@@ -44,7 +44,7 @@ static Xbyak::Operand::Code capstone_to_xbyak(x86_reg reg) {
     CASE_N(14)
     CASE_N(15)
   }
-  __debugbreak();
+  dbg_break();
   return Xbyak::Operand::Code::RAX;
 #undef CASE_N
 #undef CASE_R
@@ -157,21 +157,21 @@ static PS4ABI void *getFsBase() {
 /*this implementation is based on uplift*/
 void codeLift::emit_fsbase(uint8_t *base) {
   if (insn->detail->x86.op_count != 2)
-    __debugbreak();
+    dbg_break();
 
   auto operands = insn->detail->x86.operands;
 
   if (operands[0].type != X86_OP_REG)
-    __debugbreak();
+    dbg_break();
 
   if (operands[1].type != X86_OP_MEM || operands[1].mem.segment != X86_REG_FS ||
       operands[1].mem.base != X86_REG_INVALID ||
       operands[1].mem.index != X86_REG_INVALID) {
-    __debugbreak();
+    dbg_break();
   }
 
   if (operands[0].size != 8 && operands[0].size != 4) {
-    __debugbreak();
+    dbg_break();
     return;
   }
 

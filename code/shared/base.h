@@ -43,7 +43,7 @@
 #define bswap32 _byteswap_ulong
 #define bswap64 _byteswap_uint64
 
-#define dbg_break() DebugBreak()
+#define dbg_break() __debugbreak()
 
 #endif
 

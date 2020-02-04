@@ -7,17 +7,17 @@
 
 namespace krnl {
 int PS4ABI sys_exit() {
-  __debugbreak();
+  dbg_break();
   return 0;
 }
 
 int PS4ABI sys_rfork() {
-  __debugbreak();
+  dbg_break();
   return 0;
 }
 
 int PS4ABI sys_execve() {
-  __debugbreak();
+  dbg_break();
   return 0;
 }
 
@@ -79,7 +79,7 @@ int PS4ABI sys_regmgr_call(uint32_t op, uint32_t id, void *result, void *value,
 
     return 0x800D0203;
   } else
-    __debugbreak();
+    dbg_break();
 
   return -1;
 }
@@ -96,7 +96,7 @@ int PS4ABI sys_write(uint32_t fd, const void *buf, size_t nbytes) {
     return 0;
   }
 
-  __debugbreak();
+  dbg_break();
 
   return -1;
 }
