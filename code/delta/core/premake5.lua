@@ -63,6 +63,8 @@ project "dcore"
             "winextras",
             "qml"
         }
+    filter "system:not windows"
+        removefiles "**.rc"
     filter {}
     
     qtprefix "Qt5"
