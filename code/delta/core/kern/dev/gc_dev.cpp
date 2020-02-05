@@ -32,7 +32,7 @@ int32_t gcDevice::ioctl(uint32_t cmd, void *data) {
     };
 
     /*idk what the proper value would be*/
-    auto se0 = (unsigned __int16)1024 >> 6;
+    auto se0 = (uint16_t)1024 >> 6;
     auto se1 = (1024 >> 16) & 0x3FF;
 
     auto args = reinterpret_cast<argl *>(data);
@@ -69,7 +69,7 @@ int32_t gcDevice::ioctl(uint32_t cmd, void *data) {
   }
   }
 
-  __debugbreak();
+  dbg_break();
 
   return 0;
 }
