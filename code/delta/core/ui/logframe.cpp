@@ -1,7 +1,7 @@
 
 // Copyright (C) Force67 2019
 
-#include <QScrollbar>
+#include <QScrollBar>
 #include <QTimer>
 
 #include "logframe.h"
