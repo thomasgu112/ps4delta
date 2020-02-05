@@ -11,7 +11,7 @@ build/
 *.i64
 
 # QT generated code
-code/delta/core/qtgen/*
+code/delta_qt/qtgen/*
 
 # User-specific files
 *.suo
