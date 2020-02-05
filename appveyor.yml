@@ -44,6 +44,7 @@ for:
     - |
       git submodule update --init --recursive
       export QT_DIR=/usr/lib/x86_64-linux-gnu
+      export QT_INCLUDE=/usr/include/x86_64-linux-gnu/qt5
       chmod +x ./pmake.sh
       ./pmake.sh
   build_script:

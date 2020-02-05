@@ -33,14 +33,14 @@ project "dcore"
         "shared",
         "capstone",
         "zlib",
-		"fmtlib"
+        "fmtlib"
     }
 
     files {
         "premake5.lua",
         "_res/core.rc",
         "**.ui",
-		"**.inl",
+        "**.inl",
         "**.h",
         "**.hpp",
         "**.cpp",
@@ -74,6 +74,10 @@ project "dcore"
     local qtd = os.getenv("Qt5_Dir")
     if qtd then
         qtpath(qtd)
+    end
+    local qti = os.getenv("QT_INCLUDE")
+    if qti then
+        qtincludepath(qti)
     end
     
     -- use debug versions of qt
