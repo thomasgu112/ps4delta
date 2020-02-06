@@ -7,6 +7,7 @@
  * in the root of the source tree.
  */
 
+#include <base.h>
 #include <algorithm>
 
 #include "path.h"
@@ -15,6 +16,10 @@
 #ifdef _WIN32
 #include <Windows.h>
 #include <shlobj.h> // for SHGetFolderPath
+#else
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 #endif
 
 #include "logger/logger.h"
@@ -67,7 +72,14 @@ bool make_dir(std::string_view rel) {
     // allows for recursive directory creation
     return SHCreateDirectoryEx(nullptr, newPath.c_str(), nullptr);
 }
-
+#else
+static std::string get_home_dir() {
+    const char* newPath = getenv("HOME");
+    if (newPath == NULL) {
+        newPath = getpwuid(getuid())->pw_dir;
+    }
+    return newPath;
+}
 #endif
 
 std::string make_app_path(app_path path, std::string_view rel /* = nullptr */) {
@@ -79,8 +91,7 @@ std::string make_app_path(app_path path, std::string_view rel /* = nullptr */) {
         switch (path) {
         case app_path::data_dir: {
 
-            // TODO: change backslashes
-            newPath = get_home_dir() + "\\" + FXNAME + "\\";
+            newPath = get_home_dir() + PATH_SEP + FXNAME + PATH_SEP;
             if (!exists(newPath))
                 make_dir(newPath);
 
