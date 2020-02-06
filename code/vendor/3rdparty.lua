@@ -64,7 +64,11 @@ project "glfw"
         "glfw/src"
     }
     
-    defines "_GLFW_WIN32"
+    filter "system:windows"
+        defines "_GLFW_WIN32"
+    filter "system:not windows"
+        defines "_GLFW_X11"
+    filter {}
     
     files
     {   
