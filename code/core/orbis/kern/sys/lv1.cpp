@@ -9,7 +9,9 @@
 
 #include <cstdint>
 #include <cstdio>
+#ifdef _WIN32
 #include <intrin.h>
+#endif
 #include <xbyak.h>
 
 #include "sys_debug.h"
@@ -60,8 +62,10 @@ moduleInfo* reportCallAddress(void* retAddr) {
 #endif
 
 static int PS4ABI sys_nosys() {
+#ifdef _WIN32
     void* retAddr = _ReturnAddress();
-    __debugbreak();
+#endif
+    dbg_break();
     //reportCallAddress(retAddr);
     return 0;
 }
@@ -123,7 +127,7 @@ uintptr_t lv1_get(uint32_t sid) {
     constexpr auto memberCount = sizeof(syscall_dpt) / sizeof(syscall_Reg);
 
     if (sid > memberCount)
-        __debugbreak();
+        dbg_break();
 
     return reinterpret_cast<uintptr_t>(
         emitCallReporter(syscall_dpt[sid].name, sid, syscall_dpt[sid].ptr));

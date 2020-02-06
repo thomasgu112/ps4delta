@@ -8,6 +8,7 @@
  */
 
 #include <base.h>
+#include <cstring>
 #include "memory.h"
 
 namespace memory {
@@ -78,7 +79,7 @@ uint8_t* block::xalloc(uint8_t* desired_addr, size_t size, uint32_t flags, page_
 
         if (!pinfo) {
             /*attempts to map at fixed address failed*/
-            __debugbreak();
+            dbg_break();
             return nullptr;
         }
 
@@ -91,7 +92,7 @@ uint8_t* block::xalloc(uint8_t* desired_addr, size_t size, uint32_t flags, page_
 
         // free space is too small
         if (hits != page_count) {
-            __debugbreak();
+            dbg_break();
             return nullptr;
         }
 
@@ -105,7 +106,7 @@ uint8_t* block::xalloc(uint8_t* desired_addr, size_t size, uint32_t flags, page_
 
     // clear out private memory
     if (flags & anon)
-        std::memset(desired_addr, 0, block_size);
+        memset(desired_addr, 0, block_size);
 
     page_protection tp = utl::page_read;
     if (prot & page_writable)
@@ -245,7 +246,7 @@ SharedPtr<block> vmManager::getBlock(uint8_t* addr, memory_location loc) {
     if (loc != memory_location::any && loc < blocks.size()) {
         auto block = blocks[loc];
         if (!block)
-            __debugbreak();
+            dbg_break();
 
         return block;
     }
@@ -266,7 +267,7 @@ uint8_t* vmManager::alloc(uint8_t* desired, size_t size, memory_location locatio
     auto block = getBlock(desired, location);
 
     if (!block)
-        __debugbreak();
+        dbg_break();
 
     const uint32_t hack = page_executable | page_writable | page_readable;
 
