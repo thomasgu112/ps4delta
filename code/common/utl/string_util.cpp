@@ -10,6 +10,8 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#else
+#include <locale>
 #endif
 
 namespace utl {
