@@ -3,6 +3,7 @@
 // taken from:
 // https://github.com/xenia-project/xenia/blob/master/src/xenia/kernel/xobject.h
 
+#include <base.h>
 #include <memory>
 
 namespace utl {
