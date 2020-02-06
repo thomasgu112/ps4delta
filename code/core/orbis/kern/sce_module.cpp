@@ -133,7 +133,7 @@ static bool decodeNid(const char* name, uint64_t& lid, uint64_t& mid) {
 bool sce_module::resolveObfSymbol(const char* name, uintptr_t& ptrOut) {
     uint64_t libid = 0, modid = 0;
     if (!decodeNid(name, libid, modid))
-        __debugbreak();
+        dbg_break();
 
     auto lib_it =
         std::find_if(libs.begin(), libs.end(), [&libid](const auto& e) { return e.id == libid; });
@@ -170,7 +170,7 @@ bool sce_module::resolveObfSymbol(const char* name, uintptr_t& ptrOut) {
 }
 
 static void report_unpatched() {
-    __debugbreak();
+    dbg_break();
 }
 
 bool sce_module::resolveImports() {
@@ -245,7 +245,7 @@ bool sce_module::doRelocations() {
                 }
 
                 if (!symVal)
-                    __debugbreak();
+                    dbg_break();
             }
         }
 

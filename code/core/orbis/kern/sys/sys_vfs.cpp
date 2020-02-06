@@ -58,11 +58,11 @@ int PS4ABI sys_open(const char* path, uint32_t flags, uint32_t mode) {
 
             return dev->handle();
         } else
-            __debugbreak();
+            dbg_break();
         return -1;
     }
 
-    __debugbreak();
+    dbg_break();
     return 0;
 }
 

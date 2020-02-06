@@ -130,7 +130,7 @@ bool codeLift::transform(uint8_t* data, size_t size, uint64_t base) {
                     } else if (operand.mem.segment == X86_REG_DS ||
                                operand.mem.segment == X86_REG_ES ||
                                operand.mem.segment == X86_REG_GS) {
-                        //__debugbreak();
+                        //dbg_break();
                     }
                 }
             }

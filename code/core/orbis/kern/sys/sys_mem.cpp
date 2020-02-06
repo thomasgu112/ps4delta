@@ -18,7 +18,7 @@
 namespace kern {
 uint8_t* PS4ABI sys_mmap(void* addr, size_t size, uint32_t prot, uint32_t flags, uint32_t fd,
                          size_t offset) {
-    __debugbreak();
+    dbg_break();
     auto* proc = process::getActive();
     if (!proc)
         return reinterpret_cast<uint8_t*>(-1);
@@ -27,9 +27,9 @@ uint8_t* PS4ABI sys_mmap(void* addr, size_t size, uint32_t prot, uint32_t flags,
         flags |= mFlags::anon;
 
     if (flags & mFlags::fixed) {
-        __debugbreak();
+        dbg_break();
     } else if (!addr) {
-        __debugbreak();
+        dbg_break();
         addr = reinterpret_cast<void*>(0x200000000);
     }
 
@@ -92,7 +92,7 @@ int PS4ABI sys_mname(uint8_t* ptr, size_t len, const char* name, void*) {
     if (!proc)
         return -1;
 
-    __debugbreak();
+    dbg_break();
     #if 0
     auto* info = proc->getVma().get(ptr);
     if (!info) {
@@ -137,7 +137,7 @@ int PS4ABI sys_dmem_container(uint32_t op) {
     if (op == -1)
         return 0;
 
-    __debugbreak();
+    dbg_break();
     return -1;
 }
 } // namespace krnl

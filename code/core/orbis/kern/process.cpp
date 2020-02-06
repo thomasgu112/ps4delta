@@ -52,7 +52,7 @@ SharedPtr<prx_module> process::loadPrx(std::string_view name) {
         // TODO: this is a _bit_ ugly
         prx = prx_module::load(*this, pathX);
         if (!prx) {
-            __debugbreak();
+            dbg_break();
             return nullptr;
         }
 
@@ -104,7 +104,7 @@ bool process::load(std::string_view path) {
 }
 
 static void PS4ABI shutdownHandler() {
-    __debugbreak();
+    dbg_break();
 }
 
 void process::run() {

@@ -140,7 +140,7 @@ void smodule::digestDynamic() {
 bool smodule::resolveObfSymbol(const char* name, uintptr_t& ptrOut) {
     uint64_t libid = 0, modid = 0;
     if (!decodeNid(name, libid, modid))
-        __debugbreak();
+        dbg_break();
 
     const char* libname = nullptr;
 

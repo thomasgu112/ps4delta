@@ -26,7 +26,7 @@ int PS4ABI sys_dynlib_dlopen(const char*) {
 
 int PS4ABI sys_dynlib_get_info(uint32_t handle, dynlib_info* dyn_info) {
     if (dyn_info->size != sizeof(*dyn_info)) {
-        __debugbreak();
+        dbg_break();
         return SysError::eINVAL;
     }
 
@@ -47,7 +47,7 @@ int PS4ABI sys_dynlib_get_info(uint32_t handle, dynlib_info* dyn_info) {
 int PS4ABI sys_dynlib_get_info_ex(uint32_t handle, int32_t ukn /*always 1*/,
                                   dynlib_info_ex* dyn_info) {
     if (dyn_info->size != sizeof(*dyn_info)) {
-        __debugbreak();
+        dbg_break();
         return SysError::eINVAL;
     }
 
@@ -115,7 +115,7 @@ int PS4ABI sys_dynlib_get_obj_member(uint32_t handle, uint8_t index, void** valu
     if (!mod)
         return -1;
 
-    __debugbreak();
+    dbg_break();
     // TBD
     //*value = mod->getInfo().initAddr;
     return 0;
