@@ -9,6 +9,7 @@
 
 #include "mem.h"
 
+#include <base.h>
 #include <Windows.h>
 
 namespace utl {
