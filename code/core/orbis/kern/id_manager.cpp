@@ -143,7 +143,7 @@ bool idManager::add(s_object* obj, uint32_t& handleOut) {
         return true;
     }
 
-    __debugbreak();
+    dbg_break();
 
     handleOut = -1;
     return false;
