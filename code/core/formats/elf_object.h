@@ -12,6 +12,7 @@
 
 #include <elf_types.h>
 #include <sce_types.h>
+#include <cstring>
 
 namespace formats {
 enum elfError { success, encrypted, badformat, badmachine, stream_pgheaders, stream_data };
