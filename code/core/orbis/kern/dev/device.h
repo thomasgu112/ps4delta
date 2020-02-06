@@ -8,6 +8,7 @@
  * in the root of the source tree.
  */
 
+#include <base.h>
 #include "kern/sys/error_table.h"
 #include "../object.h"
 
@@ -22,11 +23,11 @@ public:
         return true;
     }
     virtual uint8_t* map(void*, size_t, uint32_t, uint32_t, size_t) {
-        __debugbreak();
+        dbg_break();
         return nullptr;
     }
     virtual int32_t ioctl(uint32_t command, void* args) {
-        __debugbreak();
+        dbg_break();
         return -1;
     }
 };

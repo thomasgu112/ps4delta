@@ -70,7 +70,7 @@ int32_t gcDevice::ioctl(uint32_t cmd, void* data) {
     }
     }
 
-    __debugbreak();
+    dbg_break();
 
     return 0;
 }
