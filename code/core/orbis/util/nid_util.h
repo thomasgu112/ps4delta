@@ -9,6 +9,7 @@
  */
 
 #include <cstdint>
+#include <cstddef>
 
 namespace util {
 void encode_nid(const char* symName, uint8_t* out);

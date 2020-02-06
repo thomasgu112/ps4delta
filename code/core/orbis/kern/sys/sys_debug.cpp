@@ -10,6 +10,8 @@
 #include <string>
 #include <base.h>
 
+#ifdef _WIN32
 #include <intrin.h>
+#endif
 
 namespace kern {}

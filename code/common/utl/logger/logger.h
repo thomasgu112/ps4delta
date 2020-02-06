@@ -83,7 +83,7 @@ inline void fmtLogMsg(logLevel lvl, uint32_t line, const char* func, const std::
         if (!(expression)) {                                                                       \
             ::utl::fmtLogMsg(::utl::logLevel::Error, __LINE__, __func__,                           \
                              "assertion failed at " #expression);                                  \
-            __debugbreak();                                                                        \
+            dbg_break();                                                                        \
         }                                                                                          \
     \
 } while (0)

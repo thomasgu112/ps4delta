@@ -77,7 +77,7 @@ int32_t gcDevice::ioctl(uint32_t cmd, void* data) {
 
 /*map to gfx memory*/
 uint8_t* gcDevice::map(void* addr, size_t, uint32_t, uint32_t, size_t) {
-    //__debugbreak();
+    //dbg_break();
     return reinterpret_cast<uint8_t*>(-1);
 }
 } // namespace krnl

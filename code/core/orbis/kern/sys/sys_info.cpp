@@ -10,7 +10,9 @@
 #include <string>
 #include <base.h>
 
+#ifdef _WIN32
 #include <intrin.h>
+#endif
 
 #include "kern/process.h"
 
@@ -57,7 +59,7 @@ int PS4ABI sys_sysctl(int* name, uint32_t namelen, void* oldp, size_t* oldlenp, 
 
     // kern.userstack
     else if (name[0] == 1 && name[1] == 33 && namelen == 2) {
-        __debugbreak();
+        dbg_break();
         //auto& info = process::getActive()->getEnv();
         //*static_cast<void**>(oldp) = info.userStack + info.userStackSize;
         //std::printf("userstack -> base %p, end %p\n", info.userStack, oldp);
@@ -146,7 +148,7 @@ int PS4ABI sys_sysctl(int* name, uint32_t namelen, void* oldp, size_t* oldlenp, 
 
     // std::printf("sysctl referenced by %p\n", _ReturnAddress());
    // reportCallAddress(_ReturnAddress());
-    __debugbreak();
+    dbg_break();
     return 0;
 }
 } // namespace krnl

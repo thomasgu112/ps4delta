@@ -9,6 +9,7 @@
 
 #include "mem.h"
 
+#include <base.h>
 #include <Windows.h>
 
 namespace utl {
@@ -25,7 +26,7 @@ DWORD protection_ToWin32(page_protection prot) {
     case page_protection::page_execute_read_write:
         return PAGE_EXECUTE_READWRITE;
     default:
-        __debugbreak();
+        dbg_break();
         return PAGE_NOACCESS;
     }
 }
@@ -39,7 +40,7 @@ DWORD allocType_ToWin32(allocType type) {
     case allocType::reservecommit:
         return MEM_RESERVE | MEM_COMMIT;
     default:
-        __debugbreak();
+        dbg_break();
         return 0;
     }
 }
