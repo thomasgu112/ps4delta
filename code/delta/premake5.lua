@@ -49,3 +49,6 @@ project "delta"
         "**.cpp",
         "**.c"
     }
+
+    filter "system:not windows"
+        removefiles "**.rc"
