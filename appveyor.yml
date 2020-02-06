@@ -52,9 +52,9 @@ for:
     - |
       cd build
       if [ "$CONFIGURATION" = "Release" ]; then
-        make config=release_x64
+        make config=release
       else
-        make config=debug_x64
+        make config=debug
       fi
 
 test: off
