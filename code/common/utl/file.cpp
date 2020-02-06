@@ -39,7 +39,7 @@ public:
 
 #ifdef _WIN32
         fopen_s(&fptr, std::string(path).data(), modeStr);
-#elif __linux__
+#else
         fptr = fopen(std::string(path).data(), modeStr);
 #endif
         if (!fptr) return false;
