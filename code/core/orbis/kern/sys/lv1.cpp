@@ -62,9 +62,7 @@ moduleInfo* reportCallAddress(void* retAddr) {
 #endif
 
 static int PS4ABI sys_nosys() {
-#ifdef _WIN32
-    void* retAddr = __builtin_return_address(0);
-#endif
+    void* retAddr = _ReturnAddress();
     dbg_break();
     //reportCallAddress(retAddr);
     return 0;

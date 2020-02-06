@@ -79,6 +79,7 @@ using UniquePtr = std::unique_ptr<T>;
 #include <limits.h>
 #define MAX_PATH PATH_MAX + 1
 #define _STD ::std::
+#define _ReturnAddress() __builtin_return_address(0)
 #endif
 
 #define POW2_MASK (align - static_cast<T>(1))

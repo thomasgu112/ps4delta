@@ -72,7 +72,7 @@ uint8_t* PS4ABI sys_mmap(void* addr, size_t size, uint32_t prot, uint32_t flags,
     // now we apply target protection
     utl::protectMem(static_cast<void*>(ptr), size, tprot);
 
-    std::printf("mmap request %p -> action %p %x, %p\n", addr, ptr, size, __builtin_return_address(0));
+    std::printf("mmap request %p -> action %p %x, %p\n", addr, ptr, size, _ReturnAddress());
     // LOG_WARNING("addr={}, len={}, requested by {}", fmt::ptr(addr), len,
     // fmt::ptr(_ReturnAddress()));
 
