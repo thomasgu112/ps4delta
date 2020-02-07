@@ -7,7 +7,7 @@
  * in the root of the source tree.
  */
 
-#include <QScrollbar>
+#include <QScrollBar>
 #include <QTimer>
 
 #include "logframe.h"
