@@ -1,0 +1,60 @@
+version: '{build}'
+
+pull_requests:
+  do_not_increment_build_number: true
+
+skip_tags: true
+
+image:
+- Ubuntu
+- Visual Studio 2019
+
+configuration:
+- Release
+- Debug
+
+platform:
+- x64
+#- x86 # by design PS4Delta can't support x86 systems
+
+for:
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+  install:
+    - |
+      git submodule update --init --recursive
+      set QT_DIR=C:\Qt\5.14.0\msvc2017_64
+      pmake.bat
+  build:
+    project: build/PS4Delta.sln
+    parallel: true
+    verbosity: minimal
+  after_build:
+    - 7z a Artifacts.zip .\bin\*
+  artifacts:
+    - path: Artifacts.zip
+
+-
+  matrix:
+    only:
+      - image: Ubuntu
+  install:
+    - |
+      git submodule update --init --recursive
+      sudo apt-get update && sudo apt install -y qtbase5-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev
+      export QT_DIR=/usr/lib/x86_64-linux-gnu
+      export QT_INCLUDE=/usr/include/x86_64-linux-gnu/qt5
+      chmod +x ./pmake.sh
+      ./pmake.sh
+  build_script:
+    - |
+      cd build
+      if [ "$CONFIGURATION" = "Release" ]; then
+        make config=release
+      else
+        make config=debug
+      fi
+
+test: off
