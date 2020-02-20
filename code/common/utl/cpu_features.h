@@ -9,7 +9,7 @@
  */
 
 #include <cstdint>
-#include <intrin.h>
+#include <windowsce/intrin.h>
 
 // forked from xbyak
 

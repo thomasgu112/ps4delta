@@ -10,6 +10,6 @@
 #include <string>
 #include <base.h>
 
-#include <intrin.h>
+#include <windowsce/intrin.h>
 
 namespace kern {}

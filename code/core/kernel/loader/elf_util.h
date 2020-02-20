@@ -9,6 +9,7 @@
  */
 
 #include <cstdint>
+#include <cstddef>
 
 namespace kern {
 // symbol util

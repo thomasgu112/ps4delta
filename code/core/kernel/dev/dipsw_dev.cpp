@@ -25,7 +25,7 @@ int32_t dipswDevice::ioctl(uint32_t cmd, void* data) {
         *static_cast<uint32_t*>(data) = 0;
         break;
     default:
-        __debugbreak();
+        dbg_break();
     }
 
     return 0;

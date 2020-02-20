@@ -40,7 +40,7 @@ static uintptr_t get_static_func(const char* lib, u64 hid) {
     }
 
     if (module) {
-        __debugbreak();
+        dbg_break();
         // search the table
         for (int i = 0; i < module->funcCount; i++) {
             auto* f = &module->funcNodes[i];
@@ -113,7 +113,7 @@ static bool decodeNid(const char* name, u64& lid, u64& mid) {
 bool sce_module::resolveObfSymbol(const char* name, uintptr_t& ptrOut) {
     u64 libid = 0, modid = 0;
     if (!decodeNid(name, libid, modid))
-        __debugbreak();
+        dbg_break();
 
     auto lib_it =
         std::find_if(libs.begin(), libs.end(), [&libid](const auto& e) { return e.id == libid; });
@@ -152,7 +152,7 @@ bool sce_module::resolveObfSymbol(const char* name, uintptr_t& ptrOut) {
 }
 
 static void report_unpatched() {
-    __debugbreak();
+    dbg_break();
 }
 
 bool sce_module::resolveImports() {
@@ -227,7 +227,7 @@ bool sce_module::doRelocations() {
                 }
 
                 if (!symVal)
-                    __debugbreak();
+                    dbg_break();
             }
         }
 

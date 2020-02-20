@@ -49,10 +49,10 @@ static Xbyak::Operand::Code capstone_to_xbyak(x86_reg reg) {
         CASE_N(14)
         CASE_N(15)
     default:
-        __debugbreak();
+        dbg_break();
         return Xbyak::Operand::Code::RAX;
     }
-    __debugbreak();
+    dbg_break();
     return Xbyak::Operand::Code::RAX;
 #undef CASE_N
 #undef CASE_R
@@ -104,11 +104,11 @@ bool codeLift::transform(uint8_t* data, size_t size, uint64_t base) {
         }
 
        // if (is_bm1_ins(insn->id)) {
-       //     __debugbreak();
+       //     dbg_break();
        // }
 
         if (insn->id == X86_INS_INVALID)
-            __debugbreak();
+            dbg_break();
 
         /*interrupt -> debugbreak*/
         else if (insn->id == X86_INS_INT) {
@@ -130,7 +130,7 @@ bool codeLift::transform(uint8_t* data, size_t size, uint64_t base) {
                     } else if (operand.mem.segment == X86_REG_DS ||
                                operand.mem.segment == X86_REG_ES ||
                                operand.mem.segment == X86_REG_GS) {
-                        //__debugbreak();
+                        //dbg_break();
                     }
                 }
             }
@@ -138,7 +138,7 @@ bool codeLift::transform(uint8_t* data, size_t size, uint64_t base) {
             if (isTls && insn->id == X86_INS_MOV) {
                 emit_fsbase(getOps(0));
             } //else if (isTls)
-              //  __debugbreak();
+              //  dbg_break();
         }
     }
 
@@ -157,7 +157,7 @@ void codeLift::emit_syscall(uint8_t* base, uint32_t idx) {
 
 /*fetch fs base ptr from current process*/
 static PS4ABI void* getFsBase() {
-    __debugbreak();
+    dbg_break();
     return nullptr;
     //return kern::process::getActive()->getEnv().fsBase;
 }
@@ -165,16 +165,16 @@ static PS4ABI void* getFsBase() {
 /*this implementation is based on uplift*/
 void codeLift::emit_fsbase(uint8_t* base) {
     if (insn->detail->x86.op_count != 2)
-        __debugbreak();
+        dbg_break();
 
     auto operands = insn->detail->x86.operands;
 
     if (operands[0].type != X86_OP_REG)
-        __debugbreak();
+        dbg_break();
 
     if (operands[1].type != X86_OP_MEM || operands[1].mem.segment != X86_REG_FS ||
         operands[1].mem.base != X86_REG_INVALID || operands[1].mem.index != X86_REG_INVALID) {
-        __debugbreak();
+        dbg_break();
     }
 
     //translate register

@@ -38,17 +38,22 @@ std::string from_bool(bool value) {
     return value ? "True" : "False";
 }
 
+std::string tabs_to_spaces(int tab_size, std::string in) {
+    std::size_t i = 0;
+
+    while ((i = in.find('\t')) != std::string::npos) {
+        in.replace(i, 1, tab_size, ' ');
+    }
+
+    return in;
+}
+
 bool split_path(const std::string& full_path, std::string* _pPath, std::string* _pFilename,
                std::string* _pExtension) {
     if (full_path.empty())
         return false;
 
-    std::size_t dir_end = full_path.find_last_of("/"
-// windows needs the : included for something like just "C:" to be considered a directory
-#ifdef _WIN32
-                                                 "\\:"
-#endif
-    );
+    std::size_t dir_end = full_path.find_last_of("/\\:");
     if (std::string::npos == dir_end)
         dir_end = 0;
     else
@@ -70,15 +75,7 @@ bool split_path(const std::string& full_path, std::string* _pPath, std::string* 
     return true;
 }
 
-std::string tabs_to_spaces(int tab_size, std::string in) {
-    std::size_t i = 0;
-
-    while ((i = in.find('\t')) != std::string::npos) {
-        in.replace(i, 1, tab_size, ' ');
-    }
-
-    return in;
-}
+#ifdef _WIN32
 
 std::string utf16_to_utf8(const std::u16string& input) {
 #ifdef _MSC_VER
@@ -104,7 +101,6 @@ std::u16string utf8_to_utf16(const std::string& input) {
 #endif
 }
 
-#ifdef _WIN32
 static std::wstring CPToUTF16(uint32_t code_page, const std::string& input) {
     const auto size =
         MultiByteToWideChar(code_page, 0, input.data(), static_cast<int>(input.size()), nullptr, 0);
@@ -145,5 +141,33 @@ std::wstring utf8_to_utf16_w(const std::string& input) {
     return CPToUTF16(CP_UTF8, input);
 }
 
+#elif __linux__
+std::string utf16_to_utf8(const std::u16string& input) {
+    char p[input.length()];
+    wcstombs(p, (const wchar_t *) input.c_str(), input.length());
+    std::string output = p;
+    return output;
+}
+
+std::u16string utf8_to_utf16(const std::string& input) {
+    char16_t p[input.length()];
+    mbstowcs((wchar_t *) p, input.c_str(), input.length());
+    std::u16string output = p;
+    return output;
+}
+
+std::string utf16_to_utf8(const std::wstring& input) {
+    char p[input.length()];
+    wcstombs(p, input.c_str(), input.length());
+    std::string output = p;
+    return output;
+}
+
+std::wstring utf8_to_utf16_w(const std::string& input) {
+    wchar_t p[input.length()];
+    mbstowcs(p, input.c_str(), input.length());
+    std::wstring output = p;
+    return output;
+}
 #endif
 }

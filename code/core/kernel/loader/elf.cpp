@@ -266,7 +266,7 @@ inline const char* elf_to_string(u32 type) {
 bool loadElf(sce_module& elf, std::string_view path) {
     utl::File file(path);
     if (!file.IsOpen()) {
-        __debugbreak();
+        dbg_break();
         LOG_ERROR("Failed to open module {}", path);
         return false;
     }

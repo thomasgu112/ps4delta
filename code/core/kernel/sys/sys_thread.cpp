@@ -29,12 +29,12 @@ int PS4ABI sys_umtx_op(void* ptr, int, uint32_t op, void*, void*) {
 
     /*umtx_op_nwake_private*/
     if (op == 21)
-        __debugbreak();
+        dbg_break();
 
-    __debugbreak();
+    dbg_break();
 
     std::printf("locking kmutex! %p\n", ptr);
-    __debugbreak();
+    dbg_break();
     // TODO:
     return 0;
 }

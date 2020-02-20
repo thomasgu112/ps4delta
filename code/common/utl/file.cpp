@@ -7,8 +7,10 @@
  * in the root of the source tree.
  */
 
+#include <base.h>
 #include <algorithm>
 #include <cstdio>
+#include <cstring>
 #include "file.h"
 
 namespace utl {
@@ -35,7 +37,11 @@ public:
         else if (mode == fileMode::write)
             modeStr = "wb";
 
+#ifdef _WIN32
         fopen_s(&fptr, std::string(path).data(), modeStr);
+#else
+        fptr = fopen(std::string(path).data(), modeStr);
+#endif
         if (!fptr) return false;
 
         // we can cache the size now
@@ -65,7 +71,7 @@ public:
         uint64_t x = std::fread(buf, size, 1, fptr);
 #if DELTA_DBG
         if (x != 1) {
-            __debugbreak();
+            dbg_break();
         }
 #endif
 
@@ -121,7 +127,7 @@ public:
     }
 
     native_handle GetNativeHandle() override {
-        return static_cast<native_handle>(fptr);
+        return (uint64_t) fptr;
     }
 
     bool IsOpen() override {
@@ -142,7 +148,7 @@ public:
         if (pos < size) {
             // get readable size
             if (const uint64_t result = std::min<uint64_t>(count, size - pos)) {
-                std::memcpy(buf, ptr + pos, result);
+                memcpy(buf, ptr + pos, result);
                 pos += result;
                 return result;
             }
@@ -183,7 +189,7 @@ public:
     }
 
     native_handle GetNativeHandle() override {
-        return nullptr;
+        return 0;
     }
 };
 }

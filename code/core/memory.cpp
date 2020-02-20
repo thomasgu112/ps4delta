@@ -8,6 +8,7 @@
  */
 
 #include <base.h>
+#include <cstring>
 #include "memory.h"
 
 namespace memory {
@@ -80,7 +81,7 @@ u8* block::xalloc(u8* targetAddress, size_t size, u32 flags, page_flags prot,
 
         if (pinfo) {
             // attempting to map at owned memory?
-            __debugbreak();
+            dbg_break();
             return nullptr;
         }
 
@@ -93,7 +94,7 @@ u8* block::xalloc(u8* targetAddress, size_t size, u32 flags, page_flags prot,
 
         // free space is too small
         if (hits != page_count) {
-            __debugbreak();
+            dbg_break();
             return nullptr;
         }
 
@@ -247,7 +248,7 @@ SharedPtr<block> vmManager::getBlock(u8* addr, memory_location loc) {
     if (loc != memory_location::any && loc < blocks.size()) {
         auto block = blocks[loc];
         if (!block)
-            __debugbreak();
+            dbg_break();
 
         return block;
     }
@@ -268,7 +269,7 @@ u8* vmManager::alloc(u8* desired, size_t size, memory_location location, u32 ali
     auto block = getBlock(desired, location);
 
     if (!block)
-        __debugbreak();
+        dbg_break();
 
     const u32 hack = page_executable | page_writable | page_readable;
 

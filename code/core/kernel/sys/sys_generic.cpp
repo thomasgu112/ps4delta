@@ -15,7 +15,7 @@ int PS4ABI sys_ioctl(uint32_t fd, uint32_t cmd, void* data) {
     if (obj)
         return static_cast<device*>(obj)->ioctl(cmd, data);
     else {
-        __debugbreak();
+        dbg_break();
     }
 
     return 0;

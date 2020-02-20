@@ -9,7 +9,7 @@
 
 #include <cstdint>
 #include <cstdio>
-#include <intrin.h>
+#include <windowsce/intrin.h>
 #include <xbyak.h>
 
 #include <logger/logger.h>
@@ -61,7 +61,7 @@ moduleInfo* reportCallAddress(void* retAddr) {
 
 static int PS4ABI sys_nosys() {
     void* retAddr = _ReturnAddress();
-    __debugbreak();
+    dbg_break();
     //reportCallAddress(retAddr);
     return 0;
 }

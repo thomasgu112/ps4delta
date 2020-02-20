@@ -218,7 +218,7 @@ struct ContainerStream final : fileBase {
     }
 
     native_handle GetNativeHandle() override {
-        return nullptr;
+        return 0;
     }
 
     uint64_t Tell() override {

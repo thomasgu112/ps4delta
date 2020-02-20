@@ -65,14 +65,21 @@ using UniquePtr = std::unique_ptr<T>;
 #define bswap32 _byteswap_ulong
 #define bswap64 _byteswap_uint64
 
-#define dbg_break() DebugBreak()
+#define dbg_break() __debugbreak()
 
 #endif
 
 #ifdef _WIN32
 #define EXPORT extern "C" __declspec(dllexport)
-#elif
-#define EXPORT
+#define PATH_SEP '\\'
+#else
+#define EXPORT __attribute__ ((visibility("default")))
+#define PATH_SEP '/'
+
+#include <limits.h>
+#define MAX_PATH PATH_MAX + 1
+#define _STD ::std::
+#define _ReturnAddress() __builtin_return_address(0)
 #endif
 
 #define POW2_MASK (align - static_cast<T>(1))

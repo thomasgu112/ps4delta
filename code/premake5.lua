@@ -35,7 +35,7 @@ workspace "PS4Delta"
     
     -- multi threaded compilation
     flags "MultiProcessorCompile"
-    buildoptions "/std:c++17"
+    cppdialect "c++17"
     symbols "On"
 
     defines { "FXNAME=\"%{wks.name}\"", 
